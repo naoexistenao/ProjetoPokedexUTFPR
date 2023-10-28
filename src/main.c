@@ -5,6 +5,7 @@
 #include <math.h>
 
 
+//ok
 //gcc -o pokemon main.c -lraylib
 // ./pokemon
 
