@@ -9,5 +9,5 @@ NUNCA FORÇA O PUSH --FORCE
 
 COMANDO PARA EXECUTAR RAYLIB
 
-//gcc -o executar/main main.c -lraylib
+// gcc -o executar/main main.c -lraylib
 // ./executar/main
