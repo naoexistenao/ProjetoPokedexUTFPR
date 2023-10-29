@@ -1,0 +1,13 @@
+COMANDO PARA SUBIR NO GIT
+
+NUNCA FORÇA O PUSH --FORCE 
+
+// na pasta mundo-pokemon
+// git add .
+// git commit -m "qual a atualização"
+// git push origin main
+
+COMANDO PARA EXECUTAR RAYLIB
+
+//gcc -o executar/main main.c -lraylib
+// ./executar/main
