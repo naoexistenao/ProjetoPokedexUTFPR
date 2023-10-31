@@ -7,7 +7,9 @@ NUNCA FORÇA O PUSH --FORCE
 // git commit -m "qual a atualização"
 // git push origin main
 
+
 COMANDO PARA EXECUTAR RAYLIB
 
+// na pasta src
 // gcc -o executar/main main.c -lraylib
 // ./executar/main
