@@ -11,5 +11,14 @@ NUNCA FORÇA O PUSH --FORCE
 COMANDO PARA EXECUTAR RAYLIB
 
 // na pasta src
-// gcc -o executar/main main.c -lraylib
+// gcc batalha.c pokedex.c mochilha.c main.c -o executar/main -lraylib
 // ./executar/main
+
+sitema de vida
+
+
+
+
+    // printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[i-1].id, pokedex[i-1].nome, pokedex[i-1].tipo1, pokedex[i-1].tipo2, pokedex[i-1].total, pokedex[i-1].vida, pokedex[i-1].ataque, pokedex[i-1].defesa, pokedex[i-1].ataque_especial, pokedex[i-1].defesa_especial, pokedex[i-1].velocidade, pokedex[i-1].geracao, pokedex[i-1].lendario, pokedex[i-1].cor, pokedex[i-1].altura, pokedex[i-1].peso, pokedex[i-1].taxa_captura);
+
+    // printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[j-1].id, pokedex[j-1].nome, pokedex[j-1].tipo1, pokedex[j-1].tipo2, pokedex[j-1].total, pokedex[j-1].vida, pokedex[j-1].ataque, pokedex[j-1].defesa, pokedex[j-1].ataque_especial, pokedex[j-1].defesa_especial, pokedex[j-1].velocidade, pokedex[j-1].geracao, pokedex[j-1].lendario, pokedex[j-1].cor, pokedex[j-1].altura, pokedex[j-1].peso, pokedex[j-1].taxa_captura);
