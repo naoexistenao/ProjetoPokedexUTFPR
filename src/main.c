@@ -22,6 +22,7 @@ typedef enum{
 
 }ESTADO_JOGO;
 
+
 int main(){
 
     //definindo dimeções da janela
@@ -68,11 +69,12 @@ int main(){
         frame_atual = 0, time_frame = -10.0f, velocidade_frame = 0.9f;
 
     //vetor para todas as imagem de fundo das paginas mapa
-    int qtd_imagens_fundo = 3;
+    int qtd_imagens_fundo = 4;
     Texture fundos_mapa[qtd_imagens_fundo];
     fundos_mapa[0] = LoadTexture("./assets/img/fundos/fundo_start.png");//fundo imagem de start
     fundos_mapa[1] = LoadTexture("./assets/img/fundos/fundo_nome.png");//fundo imagem fundo nome
     fundos_mapa[2] = LoadTexture("./assets/img/fundos/fundo_menu.png");//fundo imagem fundo menu
+    fundos_mapa[3] = LoadTexture("./assets/img/fundos/mapa_terra.png");//fundo imagem fundo menu
 
     for(int i = 0; i < qtd_imagens_fundo; i++){
         if(fundos_mapa[i].id == 0){
@@ -90,9 +92,14 @@ int main(){
     }    
     char input_nome[10] = {0};
 
-    printf("%c\n", verifica_nome);
-
-
+    //Personagem
+    Texture2D personagem_img = LoadTexture("./assets/img/personagem/personagem2.png");
+    int largura_frame_personagem = personagem_img.width / 4;
+    int altura_frame_personagem = personagem_img.height / 4;
+    int frame_atual_personagem = 0;
+    int direcao_personagem = 0;
+    Vector2 posicao_personagem = {(float)(largura_janela) / 2, (float)(altura_janela) / 2};
+    
     //variavel para navegar pelo menu
     int opcao_selecionada = 0;
 
@@ -192,6 +199,40 @@ int main(){
                 }
             }
 
+            if(estado_jogo == ESTADO_MAPA){
+                if(IsKeyPressed(KEY_ESCAPE)){
+                    estado_jogo = ESTADO_MENU;
+                }
+                if (IsKeyDown(KEY_W)) {
+                    posicao_personagem.y -= 5;
+                    direcao_personagem = 3;
+                    frame_atual_personagem++;
+                }
+                if (IsKeyDown(KEY_S)) {
+                    posicao_personagem.y += 5;
+                    direcao_personagem = 0;
+                    frame_atual_personagem++;
+                }
+                if (IsKeyDown(KEY_A)) {
+                    posicao_personagem.x -= 5;
+                    direcao_personagem = 1;
+                    frame_atual_personagem++;
+
+                }
+                if (IsKeyDown(KEY_D)) {
+                    posicao_personagem.x += 5;
+                    direcao_personagem = 2;
+                    frame_atual_personagem++;
+                }
+
+            }
+
+            if(estado_jogo == ESTADO_CREDITOS){
+                if(IsKeyPressed(KEY_ESCAPE)){
+                    estado_jogo = ESTADO_MENU;
+                }
+            }
+
         }
 
 
@@ -228,10 +269,18 @@ int main(){
 
         else if(estado_jogo == ESTADO_MENU){
             DrawTexture(fundos_mapa[2], 0, 0, RAYWHITE);
-            DrawText(TextFormat(opcao_selecionada == 0 ? "> Iniciar" : "Iniciar"), largura_janela / 5 - MeasureText("Iniciar", 20), altura_janela - 480, 20, WHITE);
+            DrawText(TextFormat(opcao_selecionada == 0 ? "> Iniciar" : "Iniciar"), largura_janela / 5 - MeasureText("Iniciar", 20) - 25, altura_janela - 480, 20, WHITE);
             DrawText(TextFormat(opcao_selecionada == 1 ? "> Creditos" : "Creditos"), largura_janela / 5 - MeasureText("Creditos", 20), altura_janela - 440, 20, WHITE);
-            DrawText(TextFormat(opcao_selecionada == 2 ? "> Sair" : "Sair"), largura_janela / 5 - MeasureText("Sair", 20), altura_janela - 400, 20, WHITE);
+            DrawText(TextFormat(opcao_selecionada == 2 ? "> Sair" : "Sair"), largura_janela / 5 - MeasureText("Sair", 20) - 45, altura_janela - 400, 20, WHITE);
 
+        }
+
+        else if(estado_jogo == ESTADO_MAPA){
+            DrawTexture(fundos_mapa[3], 0, 0, RAYWHITE);
+
+            Rectangle Rec = {frame_atual_personagem * largura_frame_personagem, direcao_personagem * altura_frame_personagem, largura_frame_personagem, altura_frame_personagem};
+
+            DrawTextureRec(personagem_img, Rec, posicao_personagem, WHITE);
         }
 
         EndDrawing();
