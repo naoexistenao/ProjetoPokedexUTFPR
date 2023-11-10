@@ -8,13 +8,12 @@ evolução (inteiro), pŕe-evolução (inteiro). Deverá permitir cadastrar
 Essa relação deve aumentar e diminuir dinamicamente.
 */
 
-#ifndef POKEMON_H
-#define POKEMON_H
+#ifndef POKEDEX_H
+#define POKEDEX_H
 
-typedef struct{
-    
+typedef struct {
     int id;
-    char nome[20];
+    char nome_pokemon[20];
     char tipo1[10];
     char tipo2[10];
     int total;
@@ -31,8 +30,8 @@ typedef struct{
     float peso;
     int taxa_captura;
 
-}Pokemon;
+} Pokemon;
 
-void pokedex(Pokemon *pokedex);
+void pokedex();
 
 #endif
