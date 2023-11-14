@@ -1,6 +1,6 @@
-main: main.o pokedex/pokedex.o
+main: main.o pokedex/pokedex.o mochila/mochila.o colecao/colecao.o batalha/batalha.o captura/captura.o
 	@echo "Gerando arquivo executável"
-	gcc main.o pokedex/pokedex.o -o main
+	gcc main.o pokedex/pokedex.o  mochila/mochila.o colecao/colecao.o batalha/batalha.o captura/captura.o -o main
 
 main.o: main.c
 	@echo "Compilando e gerando os objetos"
@@ -21,6 +21,10 @@ colecao/colecao.o: ./colecao/colecao.c
 batalha/batalha.o: ./batalha/batalha.c
 	@echo "Compilando e gerando os objetos para a pasta batalha"
 	gcc -c ./batalha/batalha.c -o batalha/batalha.o
+
+captura/captura.o: ./captura/captura.c
+	@echo "Compilando e gerando os objetos para a pasta captuta"
+	gcc -c ./captura/captura.c -o captura/captura.o
 
 clean:
 	@echo "Apagando objetos e executáveis antigos..."

@@ -10,8 +10,8 @@ Essa relação deve aumentar e diminuir dinamicamente.
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "pokedex.h"
 #include <string.h>
+#include "pokedex.h"
 
 void inserir(Pokemon pokedex[], int *num_pokemons_alocacao);
 void listar(Pokemon pokedex[], int num_pokemons_alocacao);
@@ -191,8 +191,7 @@ void pesquisar(Pokemon pokedex[], int num_pokemons_alocacao){
     pesquisar[strcspn(pesquisar, "\n")] = '\0';
     
     for(int i = 1; i < num_pokemons_alocacao; i++){
-        int pesquisa = 0;
-        if(pesquisa == 0){
+        if(strcmp(pesquisar, pokedex[i].nome_pokemon) == 0){
             printf("Pesquisar pokemon\n");    
             printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[i - 1].id, pokedex[i - 1].nome_pokemon, pokedex[i - 1].tipo1, pokedex[i - 1].tipo2, pokedex[i - 1].total, pokedex[i - 1].vida, pokedex[i - 1].ataque, pokedex[i - 1].defesa, pokedex[i - 1].ataque_especial, pokedex[i - 1].defesa_especial, pokedex[i - 1].velocidade, pokedex[i - 1].geracao, pokedex[i - 1].lendario, pokedex[i - 1].cor, pokedex[i - 1].altura, pokedex[i - 1].peso, pokedex[i - 1].taxa_captura);
 
@@ -239,12 +238,12 @@ void excluir(Pokemon pokedex[], int *num_pokemons_alocacao){
     pesquisar[strcspn(pesquisar, "\n")] = '\0';
 
         for(int i = 1; i < *num_pokemons_alocacao; i++){
-            if(strcmp(pesquisar, pokedex[i - 1].nome_pokemon) == 0){
+            if(strcasecmp(pesquisar, pokedex[i - 1].nome_pokemon) == 0){
                 printf("Excluiu pokemon\n");
                 // Exclua o Pokémon da pokedex[i].
                 for (int j = i; j < *num_pokemons_alocacao - 1; j++) {
                     pokedex[j] = pokedex[j + 1];
-                    }
+                    }//for
                 (*num_pokemons_alocacao)--;
                 pokedex = (Pokemon*)realloc(pokedex, *num_pokemons_alocacao * sizeof(Pokemon));
                 break;
