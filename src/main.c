@@ -14,12 +14,15 @@
 // Importando bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include "./pokedex/pokedex.h"
 #include "./colecao/colecao.h"
 #include "./mochila/mochila.h"
 #include "./batalha/batalha.h"
 
 void escolha_primeiro_pokemon();
+void verificar_primeira_vez();
 
 int main() {
     //criando variaveis
@@ -27,7 +30,7 @@ int main() {
     //o usuario selecionar 
 
     printf("ola seja bem vindo otario kkkkk\n");
-    escolha_primeiro_pokemon();
+    verificar_primeira_vez();
 
     do {
         printf("Escolha uma opção:\n1 - Pokedex\n2 - Coleção\n3 - Mochila\n4 - Batalha\n5 - Sair\n");
@@ -59,6 +62,41 @@ int main() {
     return 0;
 }//main
 
+void verificar_primeira_vez(){
+
+    char verifica_primeira_vez;
+    char nome_jogador[20];
+    FILE *arquivo_usuario = fopen("../data/arquivo_usuario.bin", "r+b");
+    if (arquivo_usuario == NULL) {
+       perror("Erro ao carregar arquivo.bin:");
+       exit(1);
+    }//if
+
+    fread(&verifica_primeira_vez, sizeof(char), 1, arquivo_usuario);
+
+    if(verifica_primeira_vez == 'n'){
+        printf("Digite seu nome: ");
+        setbuf(stdin, NULL);
+        fgets(nome_jogador, 20, stdin);
+        nome_jogador[strcspn(nome_jogador, "\n")] = '\0';
+
+        escolha_primeiro_pokemon();
+        verifica_primeira_vez = 's';
+
+        fseek(arquivo_usuario, 0, SEEK_SET);
+        fwrite(&verifica_primeira_vez, sizeof(char), 1, arquivo_usuario);
+
+        fseek(arquivo_usuario, sizeof(char), SEEK_SET);
+        fwrite(&nome_jogador, sizeof(char), sizeof(nome_jogador), arquivo_usuario);
+    }
+    else if(verifica_primeira_vez == 's'){
+        
+    }
+
+    fclose(arquivo_usuario);
+    return;
+}
+
 void escolha_primeiro_pokemon(){
 
     
@@ -84,8 +122,16 @@ void escolha_primeiro_pokemon(){
     fread(pokedex, sizeof(Pokemon), 151, arquivo_bin);
     fclose(arquivo_bin);
 
-    for(int i = 1; i <= 151; i++){
-       printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[i - 1].id, pokedex[i - 1].nome_pokemon, pokedex[i - 1].tipo1, pokedex[i - 1].tipo2, pokedex[i - 1].total, pokedex[i - 1].vida, pokedex[i - 1].ataque, pokedex[i - 1].defesa, pokedex[i - 1].ataque_especial, pokedex[i - 1].defesa_especial, pokedex[i - 1].velocidade, pokedex[i - 1].geracao, pokedex[i - 1].lendario, pokedex[i - 1].cor, pokedex[i - 1].altura, pokedex[i - 1].peso, pokedex[i - 1].taxa_captura);
+    int pokemons_escolher[3];
+
+    srand((unsigned int)time(NULL));
+    for(int i = 0; i < 3; i++){
+        pokemons_escolher[i] = rand() % 151 + 1;
+    }
+
+    for(int i = 0; i < 3; i++){
+
+       printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[pokemons_escolher[i]].id, pokedex[pokemons_escolher[i]].nome_pokemon, pokedex[pokemons_escolher[i]].tipo1, pokedex[pokemons_escolher[i]].tipo2, pokedex[pokemons_escolher[i]].total, pokedex[pokemons_escolher[i]].vida, pokedex[pokemons_escolher[i]].ataque, pokedex[pokemons_escolher[i]].defesa, pokedex[pokemons_escolher[i]].ataque_especial, pokedex[pokemons_escolher[i]].defesa_especial, pokedex[pokemons_escolher[i]].velocidade, pokedex[pokemons_escolher[i]].geracao, pokedex[pokemons_escolher[i]].lendario, pokedex[pokemons_escolher[i]].cor, pokedex[pokemons_escolher[i]].altura, pokedex[pokemons_escolher[i]].peso, pokedex[pokemons_escolher[i]].taxa_captura);
     }//for
 
     int escolha_pokemon = 0;
