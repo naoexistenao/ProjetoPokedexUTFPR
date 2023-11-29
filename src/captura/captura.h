@@ -3,6 +3,6 @@
 
 #include "../pokedex/pokedex.h"
 
-void captura(Pokemon* pokedex, int id_pokemon);
+void captura(int id_pokemon);
 
 #endif 

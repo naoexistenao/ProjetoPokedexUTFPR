@@ -1,6 +1,6 @@
 main: main.o pokedex/pokedex.o mochila/mochila.o colecao/colecao.o batalha/batalha.o captura/captura.o
 	@echo "Gerando arquivo executável"
-	gcc -g main.o pokedex/pokedex.o  mochila/mochila.o colecao/colecao.o batalha/batalha.o captura/captura.o -o main
+	gcc -g main.o pokedex/pokedex.o  mochila/mochila.o colecao/colecao.o batalha/batalha.o captura/captura.o -o main -lraylib
 
 main.o: main.c
 	@echo "Compilando e gerando os objetos"
@@ -23,7 +23,7 @@ batalha/batalha.o: ./batalha/batalha.c
 	gcc -g -c ./batalha/batalha.c -o batalha/batalha.o
 
 captura/captura.o: ./captura/captura.c
-	@echo "Compilando e gerando os objetos para a pasta captuta"
+	@echo "Compilando e gerando os objetos para a pasta captura"
 	gcc -g -c ./captura/captura.c -o captura/captura.o
 
 clean:

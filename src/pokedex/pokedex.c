@@ -10,6 +10,7 @@ Essa relação deve aumentar e diminuir dinamicamente.
 
 
 //Importando bibliotecas
+#include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,7 +60,23 @@ void excluir(Pokemon **pokedex, int *num_pokemons_alocacao);
 /**
 * Abre o arquivo da pokedex e mostra as opções disponíveis
 */
+
+//enum das "paginas" do jogo
+typedef enum{
+
+    ESTADO_SAIR,
+    ESTADO_OPCOES
+
+}ESTADO_JOGO;
+
 void pokedex() {
+
+    ESTADO_JOGO estado_jogo;
+    estado_jogo = ESTADO_OPCOES;
+
+    //definindo dimeções da janela
+    const int largura_janela = 800;
+    const int altura_janela = 600;
 
    int manter_id = 0;
 
@@ -87,46 +104,81 @@ void pokedex() {
    manter_id = num_pokemons_alocacao;
    int opcao = 0;
 
-   do {
-       printf("Escolhe um opção:\n1 - Inserir\n2 - Listar\n3 - Pesquisar\n4 - Alterar\n5 - Excluir\n6 - Sair\n");
-       scanf("%d", &opcao);
-       while (opcao < 1 || opcao > 6) {
-           printf("Escolhe entre 1 a 6\n");
-           printf("Escolhe um opção:\n1 - Inserir\n2 - Listar\n3 - Pesquisar\n4 - Alterar\n5 - Excluir\n6 - Sair\n");
-           scanf("%d", &opcao);
-          
-        }//while
-       switch (opcao) {
-           case 1:
-               inserir(&pokedex, &num_pokemons_alocacao, manter_id);
-               break;
-           case 2:
-               listar(pokedex, num_pokemons_alocacao);
-               break;
-           case 3:
-               pesquisar(pokedex, num_pokemons_alocacao);
-               break;
-           case 4:
-               alterar(pokedex, num_pokemons_alocacao);
-               break;
-           case 5:
-               excluir(&pokedex, &num_pokemons_alocacao);
-               break;
-        }//switch
-    } while (opcao != 6);
+    do{
+        //se usuario clicar espaço faça as ações
+        if(IsKeyPressed(KEY_SPACE)){
+            if(estado_jogo == ESTADO_OPCOES){
+                switch (opcao) {
+                    case 0:
+                        // estado_jogo = ESTADO_INSERIR;
+                        inserir(&pokedex, &num_pokemons_alocacao, manter_id);
+                        break;
+                    case 1:
+                        // estado_jogo = ESTADO_LISTAR;
+                        listar(pokedex, num_pokemons_alocacao);
+                        break;
+                    case 2:
+                        // estado_jogo = ESTADO_PESQUISAR;
+                        pesquisar(pokedex, num_pokemons_alocacao);
+                        break;
+                    case 3:
+                        // estado_jogo = ESTADO_ALTERAR;
+                        alterar(pokedex, num_pokemons_alocacao);
+                        break;
+                    case 4:
+                        // estado_jogo = ESTADO_EXCLUIR;
+                        excluir(&pokedex, &num_pokemons_alocacao);
+                        break;
+                    case 5:
+                        estado_jogo = ESTADO_SAIR;
+                        break;
+                }
+            }
+        }
 
-   // Salve os dados da Pokedex em um arquivo binário, se necessário.
-   arquivo_bin = fopen("../data/pokedex.bin", "wb");
-   if (arquivo_bin == NULL) {
-       perror("Erro ao salvar arquivo.bin:");
-       exit(1);
-    }
-   fwrite(pokedex, sizeof(Pokemon), num_pokemons_alocacao, arquivo_bin);
-   fclose(arquivo_bin);
+        if(estado_jogo == ESTADO_OPCOES){
+            if (IsKeyPressed(KEY_W)) {
+                opcao--;
+                if (opcao < 0) {
+                    opcao = 5;
+                }
+            } else if (IsKeyPressed(KEY_S)) {
+                opcao++;
+                if (opcao > 5) {
+                    opcao = 0;
+                }
+            }
+        }
 
-   free(pokedex); // Libere a memória alocada.
+        //desenhando
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        
+        DrawRectangle(0, 0, 800, 600, WHITE);
+        DrawText(TextFormat(opcao == 0 ? "> Inserir" : "Inserir"), largura_janela / 5 - MeasureText("Inserir", 20) - 25, altura_janela - 480, 20, BLACK);
+        DrawText(TextFormat(opcao == 1 ? "> Listar" : "Listar"), largura_janela / 5 - 20 - MeasureText("Listar", 20), altura_janela - 440, 20, BLACK);
+        DrawText(TextFormat(opcao == 2 ? "> Pesquisar" : "Pesquisar"), largura_janela / 4 + 20 - MeasureText("Pesquisar", 20) - 45, altura_janela - 400, 20, BLACK);
+        DrawText(TextFormat(opcao == 3 ? "> Alterar" : "Alterar"), largura_janela / 4 - 5 - MeasureText("Alterar", 20) - 45, altura_janela - 360, 20, BLACK);
+        DrawText(TextFormat(opcao == 4 ? "> Excluir" : "Excluir"), largura_janela / 4 - 5 - MeasureText("Excluir", 20) - 45, altura_janela - 320, 20, BLACK);
+        DrawText(TextFormat(opcao == 5 ? "> Sair" : "Sair"), largura_janela / 5 - MeasureText("Sair", 20) - 45, altura_janela - 280, 20, BLACK);
 
-   return;
+        EndDrawing();
+
+    }while(estado_jogo != ESTADO_SAIR);
+
+    // Salve os dados da Pokedex em um arquivo binário, se necessário.
+    arquivo_bin = fopen("../data/pokedex.bin", "wb");
+    if (arquivo_bin == NULL) {
+        perror("Erro ao salvar arquivo.bin:");
+        exit(1);
+        }
+    fwrite(pokedex, sizeof(Pokemon), num_pokemons_alocacao, arquivo_bin);
+    fclose(arquivo_bin);
+
+    free(pokedex); // Libere a memória alocada.
+
+    return;
+
 }//pokedex
 
 void inserir(Pokemon **pokedex, int *num_pokemons_alocacao, int manter_id){
@@ -138,7 +190,8 @@ void inserir(Pokemon **pokedex, int *num_pokemons_alocacao, int manter_id){
        printf("erro sem espaço na memoria\n");
        exit(1);
    }//if
-   manter_id = ((*pokedex)[*num_pokemons_alocacao - 1].id) + 1;
+   manter_id = *num_pokemons_alocacao;
+   printf("manter id %d\n", manter_id);
    int local_certo = *num_pokemons_alocacao - 1;
    //Recebendo o nome do pokemon
     printf("Digite o nome do pokemon: ");
@@ -268,9 +321,6 @@ void alterar(Pokemon pokedex[], int num_pokemons_alocacao){
 
            break;
         }//if
-        else{
-           printf("Fudeu\n");
-        }//else
     }//for
   
 }//alterar

@@ -25,7 +25,6 @@ typedef struct{
     float altura;
     float peso;
     int taxa_captura;
-    int xp;
 } Colecao;
 
 void colecao();
