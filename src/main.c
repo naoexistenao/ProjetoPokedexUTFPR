@@ -1,3 +1,16 @@
+/**
+ * @file main.c
+ * @author Caio Eduardo (caioeduardo@alunos.utfpr.edu.br)
+ * @author Eduardo Garcia da Costa (duardogarciacosta@alunos.utfpr.edu.br)
+ * @author Estevan Garrido Hernandes Sastre (sastre@alunos.utfpr.edu.br) 
+ * @brief 
+ * @version 0.1
+ * @date 2023-11-15
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 //importando bibliotecas
 #include "raylib.h"
 #include <stdio.h>
