@@ -53,9 +53,12 @@ int main(){
 
     //criando janela com as dimeçoes definidas
     InitWindow(largura_janela, altura_janela, "Mundo Pokemon");
+    InitAudioDevice();
 
     //funcao para que a tecla Esc nao feche a janela
     SetExitKey(0);
+
+    Music music = LoadMusicStream("./assets/audio/1.mp3");
 
     //carregando fonte
     /*Font fonte = LoadFont("./assets/fontes/fonte3.otf");
@@ -232,8 +235,13 @@ int main(){
                     }
                 }
             }
+            
+            UpdateMusicStream(music); 
 
             if(estado_jogo == ESTADO_MAPA){
+
+                PlayMusicStream(music);
+
                 if(IsKeyPressed(KEY_ESCAPE)){
                     estado_jogo = ESTADO_MENU;
                 }
@@ -377,11 +385,13 @@ int main(){
         UnloadTexture(fundos_mapa[i]);
     }
     UnloadTexture(intro);
+    UnloadMusicStream(music);
 
     //
     fclose(arquivo_usuario);
 
     //fechando janela
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
@@ -419,6 +429,7 @@ void escolha_primeiro_pokemon(){
         pokemons_escolher[i] = rand() % 151 + 1;
     }
 
+    printf("\n ===========================================================\n");
     for(int i = 0; i < 10; i++){
 
        printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", pokedex[pokemons_escolher[i]].id, pokedex[pokemons_escolher[i]].nome_pokemon, pokedex[pokemons_escolher[i]].tipo1, pokedex[pokemons_escolher[i]].tipo2, pokedex[pokemons_escolher[i]].total, pokedex[pokemons_escolher[i]].vida, pokedex[pokemons_escolher[i]].ataque, pokedex[pokemons_escolher[i]].defesa, pokedex[pokemons_escolher[i]].ataque_especial, pokedex[pokemons_escolher[i]].defesa_especial, pokedex[pokemons_escolher[i]].velocidade, pokedex[pokemons_escolher[i]].geracao, pokedex[pokemons_escolher[i]].lendario, pokedex[pokemons_escolher[i]].cor, pokedex[pokemons_escolher[i]].altura, pokedex[pokemons_escolher[i]].peso, pokedex[pokemons_escolher[i]].taxa_captura);

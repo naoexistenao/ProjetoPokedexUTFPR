@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "batalha.h"
 #include "../pokedex/pokedex.h"
 #include "../mochila/mochila.h"
@@ -23,6 +24,7 @@ void batalha(){
 
     ESTADO_JOGO estado_jogo;
     estado_jogo = ESTADO_OPCOES;
+
 
     int id_pokemon = 0;
     int vetor_pokemons[6];
@@ -204,13 +206,16 @@ void batalha(){
         DrawTexture(meu_pokemon, 100, 250, RAYWHITE);
         DrawText(TextFormat("Vida: %d", pokedex_inimigo->vida), 450, 50, 20, BLACK);
         DrawText(TextFormat("Vida: %d", meus_pokemons[i].vida), 50, 310, 20, BLACK);
+
+            DrawText(TextFormat("Você atacou! Dano: %d", meus_pokemons[i].ataque), 50, 500, 20, BLACK);
+            DrawText(TextFormat("Inimigo atacou! Dano: %d", pokedex_inimigo->ataque), 50, 550, 20, BLACK);
+
         DrawText(TextFormat(opcao == 0 ? "> Ataque" : "Ataque"), 550 - MeasureText("Ataque", 20) - 25, 480, 20, BLACK);
         DrawText(TextFormat(opcao == 1 ? "> Ataque Especial" : "Ataque Especial"), 590 - MeasureText("Ataque Especial", 20), 540, 20, BLACK);
 
         EndDrawing();
 
     }while(estado_jogo != ESTADO_SAIR);
-
 
     UnloadTexture(pokemon_inimigo);
     UnloadTexture(meu_pokemon);

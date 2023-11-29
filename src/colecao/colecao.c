@@ -31,7 +31,7 @@ void pesquisar_colecao(Pokemon meus_pokemons[], int num_pokemons_alocacao);
 
 void alterar_colecao(Pokemon meus_pokemons[], int num_pokemons_alocacao);
 
-void excluir_colecao(Pokemon meus_pokemons[], int *num_pokemons_alocacao);
+void excluir_colecao(Pokemon **meus_pokemons, int *num_pokemons_alocacao);
 
 //enum das "paginas" do jogo
 typedef enum{
@@ -98,7 +98,7 @@ void colecao(){
                         break;
                     case 3:
                         // estado_jogo = ESTADO_EXCLUIR;
-                        excluir_colecao(meus_pokemons, &num_pokemons_alocacao);
+                        excluir_colecao(&meus_pokemons, &num_pokemons_alocacao);
                     break;
                     case 4:
                         estado_jogo = ESTADO_SAIR;
@@ -142,6 +142,7 @@ void colecao(){
 
 void listar_colecao(Pokemon meus_pokemons[], int num_pokemons_alocacao){
     
+    printf("\n ===========================================================\n");
     //lista os pokemons da colecao
     for(int i = 1; i <= num_pokemons_alocacao; i++){
         printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", meus_pokemons[i - 1].id, meus_pokemons[i - 1].nome_pokemon, meus_pokemons[i - 1].tipo1, meus_pokemons[i - 1].tipo2, meus_pokemons[i - 1].total, meus_pokemons[i - 1].vida, meus_pokemons[i - 1].ataque, meus_pokemons[i - 1].defesa, meus_pokemons[i - 1].ataque_especial, meus_pokemons[i - 1].defesa_especial, meus_pokemons[i - 1].velocidade, meus_pokemons[i - 1].geracao, meus_pokemons[i - 1].lendario, meus_pokemons[i - 1].cor, meus_pokemons[i - 1].altura, meus_pokemons[i - 1].peso, meus_pokemons[i - 1].taxa_captura);
@@ -201,27 +202,24 @@ void alterar_colecao(Pokemon meus_pokemons[], int num_pokemons_alocacao){
     
 }//alterar_colecao
 
-void excluir_colecao(Pokemon meus_pokemons[], int *num_pokemons_alocacao){
-    //criando varivaeis
-    //usuario pesquisa pelo pokemon
-    char pesquisar[20];
-    setbuf(stdin, NULL);
-    printf("Digite o nome do pokemón que deseja excluir: ");
-    fgets(pesquisar, 20, stdin);
-    pesquisar[strcspn(pesquisar, "\n")] = '\0';
+void excluir_colecao(Pokemon **meus_pokemons, int *num_pokemons_alocacao){
+   char pesquisar[20];
+   setbuf(stdin, NULL);
+   printf("Digite o nome do pokemón que deseja excluir: ");
+   fgets(pesquisar, 20, stdin);
+   pesquisar[strcspn(pesquisar, "\n")] = '\0';
 
-    //verificar se pokemons foi encontrado para ser excluido
-    for(int i = 1; i < *num_pokemons_alocacao; i++){
-        if(strcasecmp(pesquisar, meus_pokemons[i - 1].nome_pokemon) == 0){
-            printf("Excluiu pokemon\n");
-            // Exclua o Pokémon da meus_pokemons[i].
-            for (int j = i; j < *num_pokemons_alocacao - 1; j++) {
-                meus_pokemons[j] = meus_pokemons[j + 1];
-                }//for
-            (*num_pokemons_alocacao)--;
-            meus_pokemons = (Pokemon*)realloc(meus_pokemons, *num_pokemons_alocacao * sizeof(Pokemon));
-            break;
-        }//if
+       for(int i = 1; i <= *num_pokemons_alocacao; i++){
+           if(strcasecmp(pesquisar, (*meus_pokemons)[i - 1].nome_pokemon) == 0){
+               printf("Excluiu pokemon\n");
+               // Exclua o Pokémon da pokedex[i].
+               for (int j = i; j < *num_pokemons_alocacao; j++) {
+                   (*meus_pokemons)[j-1] = (*meus_pokemons)[j];
+               }//for
+               (*num_pokemons_alocacao)--;
+               (*meus_pokemons) = (Pokemon*)realloc((*meus_pokemons), *num_pokemons_alocacao * sizeof(Pokemon));
+               break;
+           }//if
 
-    }//for
+        }//for
 }//excluir

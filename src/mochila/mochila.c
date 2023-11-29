@@ -153,6 +153,7 @@ void escolher_pokemons(int pokemons_batalha[], FILE* arq_pokemons_batalha){
 
 void listar_mochila(Colecao meus_pokemons[], int num_pokemons_alocacao){
     
+    printf("\n ===========================================================\n");
     //lisatando os pokemons da coleção
     for(int i = 1; i <= num_pokemons_alocacao; i++){
         printf("%d %s %s %s %d %d %d %d %d %d %d %d %d %s %.2f %.2f %d\n", meus_pokemons[i - 1].id, meus_pokemons[i - 1].nome_pokemon, meus_pokemons[i - 1].tipo1, meus_pokemons[i - 1].tipo2, meus_pokemons[i - 1].total, meus_pokemons[i - 1].vida, meus_pokemons[i - 1].ataque, meus_pokemons[i - 1].defesa, meus_pokemons[i - 1].ataque_especial, meus_pokemons[i - 1].defesa_especial, meus_pokemons[i - 1].velocidade, meus_pokemons[i - 1].geracao, meus_pokemons[i - 1].lendario, meus_pokemons[i - 1].cor, meus_pokemons[i - 1].altura, meus_pokemons[i - 1].peso, meus_pokemons[i - 1].taxa_captura);
