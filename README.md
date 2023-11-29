@@ -1,7 +1,18 @@
-Parte obrigadoria
+Parte obrigatória:
 
-atualização main.c - Commits on Nov 18, 2023
+Atualização main.c - Commits em 18 de Novembro de 2023
 
-Parte criativa
+Parte criativa:
 
-atualização final - Commits on Nov 29, 2023
+Atualização final - Commits em 29 de Novembro de 2023
+
+Para executar o programa:
+
+Navegue até a pasta src.
+Digite o comando "make main" (sem aspas).
+Em seguida, use o comando "make run".
+Pressione Enter.
+Digite "run" e pressione Enter novamente.
+Pronto, divirta-se!
+
+Certifique-se de que os comandos e as instruções estejam corretos para o seu programa.
